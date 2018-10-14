@@ -33,20 +33,17 @@ namespace CodeStack.SwEx.Common.Icons
         }
 
         private readonly string m_IconsDir;
-        private readonly Color m_TransparencyKey;
         private readonly bool m_DisposeIcons;
 
-        public IconsConverter(Color transparencyKey)
-            : this(transparencyKey,
-                  Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()), true)
+        public IconsConverter()
+            : this(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()), true)
         {
         }
 
-        public IconsConverter(Color transparencyKey, string iconsDir,
+        public IconsConverter(string iconsDir,
             bool disposeIcons = true)
         {
             m_IconsDir = iconsDir;
-            m_TransparencyKey = transparencyKey;
             m_DisposeIcons = disposeIcons;
 
             if (!Directory.Exists(m_IconsDir))
@@ -55,7 +52,7 @@ namespace CodeStack.SwEx.Common.Icons
             }
         }
         
-        public string[] ConvertIconsGroup(IIcon[] icons, bool highRes)
+        public string[] ConvertIconsGroup(IIcon[] icons, bool highRes, Color transparencyKey)
         {
             IconData[,] iconsDataGroup = null;
 
@@ -86,13 +83,13 @@ namespace CodeStack.SwEx.Common.Icons
 
                 iconsPaths[i] = iconsDataGroup[i, 0].TargetIconPath;
                 CreateBitmap(imgs, iconsPaths[i],
-                    iconsDataGroup[i, 0].TargetSize, m_TransparencyKey);
+                    iconsDataGroup[i, 0].TargetSize, transparencyKey);
             }
 
             return iconsPaths;
         }
 
-        public string[] ConvertIcon(IIcon icon, bool highRes)
+        public string[] ConvertIcon(IIcon icon, bool highRes, Color transparencyKey)
         {
             var iconsData = CreateIconData(icon, highRes);
 
@@ -100,7 +97,7 @@ namespace CodeStack.SwEx.Common.Icons
             {
                 CreateBitmap(new Image[] { iconData.SourceIcon },
                     iconData.TargetIconPath,
-                    iconData.TargetSize, m_TransparencyKey);
+                    iconData.TargetSize, transparencyKey);
             }
 
             return iconsData.Select(i => i.TargetIconPath).ToArray();
@@ -130,87 +127,7 @@ namespace CodeStack.SwEx.Common.Icons
             }
 
             var iconsData = sizes.Select(s => new IconData(m_IconsDir, s.SourceImage, s.TargetSize, s.Name)).ToArray();
-
-            //if (icon is HighResIcon)
-            //{
-            //    var highResIcons = icon as HighResIcon;
-
-            //    if (highRes)
-            //    {
-            //        iconsData = new IconData[]
-            //        {
-            //            new IconData(m_IconsDir, highResIcons.Size20x20, new Size(20,20)),
-            //            new IconData(m_IconsDir, highResIcons.Size32x32, new Size(32,32)),
-            //            new IconData(m_IconsDir, highResIcons.Size40x40, new Size(40,40)),
-            //            new IconData(m_IconsDir, highResIcons.Size64x64, new Size(64,64)),
-            //            new IconData(m_IconsDir, highResIcons.Size96x96, new Size(96,96)),
-            //            new IconData(m_IconsDir, highResIcons.Size128x128, new Size(128,128))
-            //        };
-            //    }
-            //    else
-            //    {
-            //        iconsData = new IconData[]
-            //        {
-            //            new IconData(m_IconsDir, highResIcons.Size20x20, new Size(16,16)),
-            //            new IconData(m_IconsDir, highResIcons.Size32x32, new Size(24,24)),
-            //        };
-            //    }
-            //}
-            //else if (icon is BasicIcon)
-            //{
-            //    var basicIcons = icon as BasicIcon;
-
-            //    if (highRes)
-            //    {
-            //        iconsData = new IconData[]
-            //        {
-            //            new IconData(m_IconsDir, basicIcons.Size16x16, new Size(20,20)),
-            //            new IconData(m_IconsDir, basicIcons.Size24x24, new Size(32,32)),
-            //            new IconData(m_IconsDir, basicIcons.Size24x24, new Size(40,40)),
-            //            new IconData(m_IconsDir, basicIcons.Size24x24, new Size(64,64)),
-            //            new IconData(m_IconsDir, basicIcons.Size24x24, new Size(96,96)),
-            //            new IconData(m_IconsDir, basicIcons.Size24x24, new Size(128,128))
-            //        };
-            //    }
-            //    else
-            //    {
-            //        iconsData = new IconData[]
-            //        {
-            //            new IconData(m_IconsDir, basicIcons.Size16x16, new Size(16,16)),
-            //            new IconData(m_IconsDir, basicIcons.Size24x24, new Size(24,24)),
-            //        };
-            //    }
-            //}
-            //else if (icon is MasterIcon)
-            //{
-            //    var masterIcons = icon as MasterIcon;
-
-            //    if (highRes)
-            //    {
-            //        iconsData = new IconData[]
-            //        {
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(20,20)),
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(32,32)),
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(40,40)),
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(64,64)),
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(96,96)),
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(128,128))
-            //        };
-            //    }
-            //    else
-            //    {
-            //        iconsData = new IconData[]
-            //        {
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(16,16)),
-            //            new IconData(m_IconsDir, masterIcons.Icon, new Size(24,24)),
-            //        };
-            //    }
-            //}
-            //else
-            //{
-            //    throw new NotSupportedException($"Specified icon '{icon.GetType().FullName}' is not supported");
-            //}
-
+            
             return iconsData;
         }
 

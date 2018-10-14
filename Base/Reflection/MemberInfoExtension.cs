@@ -11,6 +11,9 @@ using System.Reflection;
 
 namespace CodeStack.SwEx.Common.Reflection
 {
+    /// <summary>
+    /// Provides extension methods for the <see cref="MemberInfo"/>
+    /// </summary>
     public static class MemberInfoExtension
     {
         /// <summary>

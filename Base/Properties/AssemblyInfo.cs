@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SwEx.Common")]
 [assembly: AssemblyDescription("Common libraries for SwEx framework")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CodeSTack")]
+[assembly: AssemblyCompany("CodeStack")]
 [assembly: AssemblyProduct("SwEx")]
 [assembly: AssemblyCopyright("Copyright © CodeStack 2018")]
 [assembly: AssemblyTrademark("")]

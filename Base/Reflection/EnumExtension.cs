@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace CodeStack.SwEx.Common.Reflection
 {
+    /// <summary>
+    /// Provides extension classes for the <see cref="Enum"/> enumerator
+    /// </summary>
     public static class EnumExtension
     {
         /// <summary>
@@ -33,6 +36,13 @@ namespace CodeStack.SwEx.Common.Reflection
             return att;
         }
 
+        /// <summary>
+        /// Tries to get attribute from the enumerator
+        /// </summary>
+        /// <typeparam name="TAtt">Type of attribute to get</typeparam>
+        /// <param name="enumer">Enumerator value</param>
+        /// <param name="attProc">Action to process attribute</param>
+        /// <returns>True if attribute exists</returns>
         public static bool TryGetAttribute<TAtt>(this Enum enumer, Action<TAtt> attProc)
             where TAtt : Attribute
         {

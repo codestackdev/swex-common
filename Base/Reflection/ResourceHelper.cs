@@ -10,14 +10,26 @@ using System.Reflection;
 
 namespace CodeStack.SwEx.Common.Reflection
 {
+    /// <summary>
+    /// Helper class to work with resources
+    /// </summary>
+    /// <remarks>Use this method in attributes to provide the reference to the data from the resources (i.e. text and image)</remarks>
     public static class ResourceHelper
     {
+        /// <summary>
+        /// Gets the specified resource by name
+        /// </summary>
+        /// <typeparam name="T">Type of the resource</typeparam>
+        /// <param name="resType">Type of the resource class (usually Resources)</param>
+        /// <param name="resName">Name of the resource</param>
+        /// <returns>Value of the resource</returns>
+        /// <remarks>Use nameof operator to get the resource name avoiding using the 'magic' strings</remarks>
         public static T GetResource<T>(Type resType, string resName)
         {
             return (T)GetValue(null, resType, resName.Split('.'));
         }
 
-        public static object GetValue(object obj, Type type, string[] prpsPath)
+        private static object GetValue(object obj, Type type, string[] prpsPath)
         {
             foreach (var prpName in prpsPath)
             {
