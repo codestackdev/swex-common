@@ -5,6 +5,7 @@
 //Product URL: https://www.codestack.net/labs/solidworks/swex
 //**********************
 
+using CodeStack.SwEx.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -52,12 +53,24 @@ namespace CodeStack.SwEx.Common.Icons
             }
         }
         
-        public string[] ConvertIconsGroup(IIcon[] icons, bool highRes, Color transparencyKey)
+        public string[] ConvertIconsGroup(IIcon[] icons, bool highRes)
         {
+            if (icons == null || !icons.Any())
+            {
+                throw new ArgumentNullException(nameof(icons));
+            }
+
             IconData[,] iconsDataGroup = null;
+
+            var transparencyKey = icons.First().TransparencyKey;
 
             for (int i = 0; i < icons.Length; i++)
             {
+                if (icons[i].TransparencyKey != transparencyKey)
+                {
+                    throw new IconTransparencyMismatchException(i);
+                }
+
                 var data = CreateIconData(icons[i], highRes);
 
                 if (iconsDataGroup == null)
@@ -89,7 +102,7 @@ namespace CodeStack.SwEx.Common.Icons
             return iconsPaths;
         }
 
-        public string[] ConvertIcon(IIcon icon, bool highRes, Color transparencyKey)
+        public string[] ConvertIcon(IIcon icon, bool highRes)
         {
             var iconsData = CreateIconData(icon, highRes);
 
@@ -97,7 +110,7 @@ namespace CodeStack.SwEx.Common.Icons
             {
                 CreateBitmap(new Image[] { iconData.SourceIcon },
                     iconData.TargetIconPath,
-                    iconData.TargetSize, transparencyKey);
+                    iconData.TargetSize, icon.TransparencyKey);
             }
 
             return iconsData.Select(i => i.TargetIconPath).ToArray();
@@ -107,7 +120,7 @@ namespace CodeStack.SwEx.Common.Icons
         {
             if (icon == null)
             {
-                throw new ArgumentException("Icons are not specified");
+                throw new ArgumentNullException(nameof(icon));
             }
             
             IEnumerable<IconSizeInfo> sizes = null;

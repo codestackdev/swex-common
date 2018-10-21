@@ -15,6 +15,7 @@ namespace CodeStack.SwEx.Common.Icons
 {
     public interface IIcon
     {
+        Color TransparencyKey { get; }
         IEnumerable<IconSizeInfo> GetIconSizes();
         IEnumerable<IconSizeInfo> GetHighResolutionIconSizes();
     }
