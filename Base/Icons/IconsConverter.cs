@@ -17,12 +17,30 @@ using System.Text;
 
 namespace CodeStack.SwEx.Common.Icons
 {
+    /// <summary>
+    /// Utility for converting the different types of icons with an option to scale
+    /// or generate different sets for high and low resolutions
+    /// </summary>
     public class IconsConverter : IDisposable
     {
+        /// <summary>
+        /// Icon data
+        /// </summary>
         private class IconData
         {
+            /// <summary>
+            /// Source image in original format (not scaled, not modified)
+            /// </summary>
             internal Image SourceIcon { get; set; }
+            
+            /// <summary>
+            /// Required target size for the image
+            /// </summary>
             internal Size TargetSize { get; set; }
+
+            /// <summary>
+            /// Path where the icon needs to be saved
+            /// </summary>
             internal string TargetIconPath { get; private set; }
 
             internal IconData(string iconsDir, Image sourceIcon, Size targetSize, string name)
@@ -40,7 +58,9 @@ namespace CodeStack.SwEx.Common.Icons
             : this(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()), true)
         {
         }
-
+        
+        /// <param name="iconsDir">Directory to store the icons</param>
+        /// <param name="disposeIcons">True to remove the icons when class is disposed</param>
         public IconsConverter(string iconsDir,
             bool disposeIcons = true)
         {
@@ -52,7 +72,13 @@ namespace CodeStack.SwEx.Common.Icons
                 Directory.CreateDirectory(m_IconsDir);
             }
         }
-        
+
+        /// <summary>
+        /// Converts the group of icons and stacks them horizontally
+        /// </summary>
+        /// <param name="icons">List of icons to convert</param>
+        /// <param name="highRes">True to generate high resolution icons</param>
+        /// <returns>Full paths to generated icon images</returns>
         public string[] ConvertIconsGroup(IIcon[] icons, bool highRes)
         {
             if (icons == null || !icons.Any())
@@ -102,6 +128,12 @@ namespace CodeStack.SwEx.Common.Icons
             return iconsPaths;
         }
 
+        /// <summary>
+        /// Converts icon into the required size and quality and saves it on disk
+        /// </summary>
+        /// <param name="icon">Icon to convert</param>
+        /// <param name="highRes">True to generate high resolution icon</param>
+        /// <returns>Path to generated icons</returns>
         public string[] ConvertIcon(IIcon icon, bool highRes)
         {
             var iconsData = CreateIconData(icon, highRes);
