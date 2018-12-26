@@ -55,6 +55,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\IconAttribute.cs" />
+    <Compile Include="Attributes\LoggerOptionsAttribute.cs" />
+    <Compile Include="Attributes\ModuleInfoAttribute.cs" />
+    <Compile Include="Attributes\TitleAttribute.cs" />
+    <Compile Include="Base\IModule.cs" />
+    <Compile Include="Diagnostics\ILogger.cs" />
+    <Compile Include="Diagnostics\LoggerFactory.cs" />
+    <Compile Include="Diagnostics\LoggerType.cs" />
+    <Compile Include="Diagnostics\ModuleLogger.cs" />
+    <Compile Include="Diagnostics\TraceLogger.cs" />
     <Compile Include="Exceptions\IconTransparencyMismatchException.cs" />
     <Compile Include="Icons\IconsConverter.cs" />
     <Compile Include="Icons\IconSizeInfo.cs" />
@@ -65,6 +75,7 @@
     <Compile Include="Reflection\ResourceHelper.cs" />
     <Compile Include="Reflection\TypeExtension.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

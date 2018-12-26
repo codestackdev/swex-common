@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace CodeStack.SwEx.Common.Reflection
 {
@@ -142,6 +143,23 @@ namespace CodeStack.SwEx.Common.Reflection
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Returns the COM ProgId of a type
+        /// </summary>
+        /// <param name="type">Input type</param>
+        /// <returns>COM Prog id</returns>
+        public static string GetProgId(this Type type)
+        {
+            string progId = "";
+
+            if (!type.TryGetAttribute<ProgIdAttribute>(a => progId = a.Value))
+            {
+                progId = type.FullName;
+            }
+
+            return progId;
         }
     }
 }
