@@ -18,7 +18,7 @@ namespace CodeStack.SwEx.Common.Reflection
     public static class TypeExtension
     {
         /// <summary>
-        /// Get the specified attribute from the enumerator field
+        /// Get the specified attribute from the type, all parent types and interfaces
         /// </summary>
         /// <typeparam name="TAtt">Attribute type</typeparam>
         /// <param name="type">Type</param>
@@ -39,7 +39,21 @@ namespace CodeStack.SwEx.Common.Reflection
         }
 
         /// <summary>
-        /// Attempts to get the attribute from the type
+        /// Attempts to the attribute from type, all parent types and interfaces
+        /// </summary>
+        /// <typeparam name="TAtt">Type of the attribute</typeparam>
+        /// <param name="type">Type to get attribute from</param>
+        /// <returns>Attribute or null if not found</returns>
+        public static TAtt TryGetAttribute<TAtt>(this Type type)
+            where TAtt : Attribute
+        {
+            TAtt thisAtt = null;
+            TryGetAttribute<TAtt>(type, a => thisAtt = a);
+            return thisAtt;
+        }
+
+        /// <summary>
+        /// Attempts to get the attribute from the type, all parent types and interfaces
         /// </summary>
         /// <typeparam name="TAtt">Type of the attribute</typeparam>
         /// <param name="type">Type to get attribute from</param>
@@ -55,7 +69,7 @@ namespace CodeStack.SwEx.Common.Reflection
         }
 
         /// <summary>
-        /// Attempts to get the attribute from the type
+        /// Attempts to get the attribute from the type, all parent types and interfaces
         /// </summary>
         /// <typeparam name="TAtt">Type of the attribute</typeparam>
         /// <param name="type">Type to get attribute from</param>
@@ -64,7 +78,10 @@ namespace CodeStack.SwEx.Common.Reflection
         public static bool TryGetAttribute<TAtt>(this Type type, Action<TAtt> attProc)
             where TAtt : Attribute
         {
-            var atts = type.GetCustomAttributes(typeof(TAtt), false);
+            var atts = type.GetCustomAttributes(typeof(TAtt), true).
+                Union(type.GetInterfaces().
+                SelectMany(interfaceType => interfaceType.GetCustomAttributes(typeof(TAtt), true))).
+                Distinct();
 
             if (atts != null && atts.Any())
             {

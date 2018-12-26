@@ -37,7 +37,21 @@ namespace CodeStack.SwEx.Common.Reflection
         }
 
         /// <summary>
-        /// Tries to get attribute from the enumerator
+        /// Attempts to the attribute from enumeration
+        /// </summary>
+        /// <typeparam name="TAtt">Type of the attribute</typeparam>
+        /// <param name="type">Type to get attribute from</param>
+        /// <returns>Attribute or null if not found</returns>
+        public static TAtt TryGetAttribute<TAtt>(this Enum enumer)
+            where TAtt : Attribute
+        {
+            TAtt thisAtt = null;
+            TryGetAttribute<TAtt>(enumer, a => thisAtt = a);
+            return thisAtt;
+        }
+
+        /// <summary>
+        /// Tries to get attribute from the enumeration
         /// </summary>
         /// <typeparam name="TAtt">Type of attribute to get</typeparam>
         /// <param name="enumer">Enumerator value</param>

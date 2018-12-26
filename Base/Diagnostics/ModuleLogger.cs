@@ -19,17 +19,27 @@ namespace CodeStack.SwEx.Common.Diagnostics
         private readonly bool m_LogCallStack;
 
         public ModuleLogger(IModule module)
+            : this(module?.GetType())
         {
-            if (module == null)
+        }
+
+        public ModuleLogger(Type moduleType)
+        {
+            if (moduleType == null)
             {
-                throw new ArgumentNullException(nameof(module));
+                throw new ArgumentNullException(nameof(moduleType));
+            }
+
+            if (!typeof(IModule).IsAssignableFrom(moduleType))
+            {
+                throw new InvalidCastException($"{moduleType.FullName} must implement {typeof(IModule).FullName}");
             }
 
             var logCallStack = false;
             var loggerType = LoggerType_e.Trace;
-            var logName = module.GetType().FullName;
+            var logName = moduleType.FullName;
 
-            module.GetType().TryGetAttribute<LoggerOptionsAttribute>(a => 
+            moduleType.TryGetAttribute<LoggerOptionsAttribute>(a =>
             {
                 logCallStack = a.LogCallStack;
                 loggerType = a.Type;
@@ -38,9 +48,9 @@ namespace CodeStack.SwEx.Common.Diagnostics
 
             string moduleName = "";
 
-            if (!module.GetType().TryGetAttribute<ModuleInfoAttribute>(a => moduleName = a.Name))
+            if (!moduleType.TryGetAttribute<ModuleInfoAttribute>(a => moduleName = a.Name))
             {
-                throw new NullReferenceException($"{module.GetType().FullName} doesn't have a {typeof(ModuleInfoAttribute).FullName} attribute");
+                throw new NullReferenceException($"{moduleType.FullName} doesn't have a {typeof(ModuleInfoAttribute).FullName} attribute");
             }
 
             Category = $"{moduleName}.{logName}";
