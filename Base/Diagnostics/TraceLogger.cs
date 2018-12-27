@@ -5,16 +5,13 @@ using System.Text;
 
 namespace CodeStack.SwEx.Common.Diagnostics
 {
-    internal class TraceLogger : ILogger
+    internal class TraceLogger : LoggerBase
     {
-        public string Category { get; private set; }
-
-        internal TraceLogger(string category)
+        internal TraceLogger(string category, bool logCallStack) : base(category, logCallStack)
         {
-            Category = category;
         }
 
-        public void Log(string msg)
+        public override void Log(string msg)
         {
             System.Diagnostics.Trace.WriteLine(msg, Category);
         }
