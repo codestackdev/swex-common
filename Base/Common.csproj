@@ -71,6 +71,7 @@
     <Compile Include="Icons\IconSizeInfo.cs" />
     <Compile Include="Icons\IIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\AssemblyExtension.cs" />
     <Compile Include="Reflection\EnumExtension.cs" />
     <Compile Include="Reflection\MemberInfoExtension.cs" />
     <Compile Include="Reflection\ResourceHelper.cs" />

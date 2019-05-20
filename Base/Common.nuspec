@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CodeStack.SwEx.Common</id>
-    <version>0.9.5</version>
+    <version>0.9.6</version>
     <title>SwEx.Common</title>
     <authors>CodeStack</authors>
     <owners>CodeStack</owners>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Common libraries for SwEx framework</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright © CodeStack 2018</copyright>
+    <copyright>Copyright © CodeStack 2019</copyright>
     <tags>SwEx</tags>
   </metadata>
   <files>

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CodeStack")]
 [assembly: AssemblyProduct("SwEx")]
-[assembly: AssemblyCopyright("Copyright © CodeStack 2018")]
+[assembly: AssemblyCopyright("Copyright © CodeStack 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -14,5 +14,5 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("d43af526-993c-4e56-a8aa-e9b7875b493f")]
 
-[assembly: AssemblyVersion("0.9.5.0")]
-[assembly: AssemblyFileVersion("0.9.5.0")]
+[assembly: AssemblyVersion("0.9.6.0")]
+[assembly: AssemblyFileVersion("0.9.6.0")]
