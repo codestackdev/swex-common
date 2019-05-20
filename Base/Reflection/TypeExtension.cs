@@ -178,5 +178,22 @@ namespace CodeStack.SwEx.Common.Reflection
 
             return progId;
         }
+
+        /// <summary>
+        /// Identifies if type is COM visible
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        /// <returns>True if type is COM visible</returns>
+        public static bool IsComVisible(this Type type)
+        {
+            bool isComVisible = false;
+
+            if (!type.TryGetAttribute<ComVisibleAttribute>(a => isComVisible = a.Value))
+            {
+                type.Assembly.TryGetAttribute<ComVisibleAttribute>(a => isComVisible = a.Value);
+            }
+
+            return isComVisible;
+        }
     }
 }
