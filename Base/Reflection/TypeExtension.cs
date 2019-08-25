@@ -6,7 +6,6 @@
 //**********************
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -188,10 +187,17 @@ namespace CodeStack.SwEx.Common.Reflection
         {
             bool isComVisible = false;
 
-            if (!type.TryGetAttribute<ComVisibleAttribute>(a => isComVisible = a.Value))
+            var comVisAtt = Attribute.GetCustomAttribute(type, typeof(ComVisibleAttribute), false) as ComVisibleAttribute;
+
+            if (comVisAtt != null)
+            {
+                isComVisible = comVisAtt.Value;
+            }
+            else
             {
                 type.Assembly.TryGetAttribute<ComVisibleAttribute>(a => isComVisible = a.Value);
             }
+            
 
             return isComVisible;
         }

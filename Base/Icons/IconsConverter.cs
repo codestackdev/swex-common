@@ -82,7 +82,7 @@ namespace CodeStack.SwEx.Common.Icons
 
             for (int i = 0; i < rgba.Length; i += 4)
             {
-                replacer.Invoke(ref rgba[i], ref rgba[i + 1], ref rgba[i + 2], ref rgba[i + 3]);
+                replacer.Invoke(ref rgba[i + 2], ref rgba[i + 1], ref rgba[i], ref rgba[i + 3]);
             }
 
             Marshal.Copy(rgba, 0, bmpData.Scan0, rgba.Length);
