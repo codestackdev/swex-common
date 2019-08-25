@@ -1,12 +1,11 @@
 ﻿//**********************
 //SwEx - development tools for SOLIDWORKS
-//Copyright(C) 2018 www.codestack.net
-//License: https://github.com/codestack-net-dev/swex-common/blob/master/LICENSE
+//Copyright(C) 2019 www.codestack.net
+//License: https://github.com/codestackdev/swex-common/blob/master/LICENSE
 //Product URL: https://www.codestack.net/labs/solidworks/swex
 //**********************
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -188,10 +187,17 @@ namespace CodeStack.SwEx.Common.Reflection
         {
             bool isComVisible = false;
 
-            if (!type.TryGetAttribute<ComVisibleAttribute>(a => isComVisible = a.Value))
+            var comVisAtt = Attribute.GetCustomAttribute(type, typeof(ComVisibleAttribute), false) as ComVisibleAttribute;
+
+            if (comVisAtt != null)
+            {
+                isComVisible = comVisAtt.Value;
+            }
+            else
             {
                 type.Assembly.TryGetAttribute<ComVisibleAttribute>(a => isComVisible = a.Value);
             }
+            
 
             return isComVisible;
         }

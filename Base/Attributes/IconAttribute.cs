@@ -1,10 +1,13 @@
-﻿using CodeStack.SwEx.Common.Icons;
+﻿//**********************
+//SwEx - development tools for SOLIDWORKS
+//Copyright(C) 2019 www.codestack.net
+//License: https://github.com/codestackdev/swex-common/blob/master/LICENSE
+//Product URL: https://www.codestack.net/labs/solidworks/swex
+//**********************
+
 using CodeStack.SwEx.Common.Reflection;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 
 namespace CodeStack.SwEx.Common.Attributes
 {
