@@ -17,6 +17,9 @@ namespace CodeStack.SwEx.Common.Attributes
     [AttributeUsage(AttributeTargets.All)]
     public class IconAttribute : Attribute
     {
+        /// <summary>
+        /// Image assigned to this icon
+        /// </summary>
         public Image Icon { get; private set; }
 
         /// <param name="resType">Type of the static class (usually Resources)</param>
