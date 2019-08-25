@@ -5,6 +5,7 @@
 //Product URL: https://www.codestack.net/labs/solidworks/swex
 //**********************
 
+using CodeStack.SwEx.Common.Base;
 using CodeStack.SwEx.Common.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,13 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace CodeStack.SwEx.Common.Icons
 {
-    /// <summary>
-    /// Utility for converting the different types of icons with an option to scale
-    /// or generate different sets for high and low resolutions
-    /// </summary>
-    public class IconsConverter : IDisposable
+    /// <inheritdoc/>
+    public class IconsConverter : IIconsConverter, IDisposable
     {
         /// <summary>
         /// Icon data
@@ -51,6 +50,48 @@ namespace CodeStack.SwEx.Common.Icons
             }
         }
 
+        /// <summary>
+        /// Custom handler for the image replace function <see cref="IconsConverter.ReplaceColor(Image, ColorReplacerDelegate)"/>
+        /// </summary>
+        /// <param name="r">Red component of pixel</param>
+        /// <param name="g">Green component of pixel</param>
+        /// <param name="b">Blue component of pixel</param>
+        /// <param name="a">Alpha component of pixel</param>
+        public delegate void ColorReplacerDelegate(ref byte r, ref byte g, ref byte b, ref byte a);
+
+        /// <summary>
+        /// Replaces the pixels in the image based on the custom replacer handler
+        /// </summary>
+        /// <param name="icon">Image to replace</param>
+        /// <param name="replacer">Handler to replace which is called for each pixel</param>
+        /// <returns>Resulting image</returns>
+        public static Image ReplaceColor(Image icon, ColorReplacerDelegate replacer)
+        {
+            var maskImg = new Bitmap(icon);
+
+            var rect = new Rectangle(0, 0, maskImg.Width, maskImg.Height);
+
+            var bmpData = maskImg.LockBits(rect, ImageLockMode.ReadWrite,
+                PixelFormat.Format32bppArgb);
+
+            var ptr = bmpData.Scan0;
+
+            var rgba = new byte[Math.Abs(bmpData.Stride) * maskImg.Height];
+
+            Marshal.Copy(ptr, rgba, 0, rgba.Length);
+
+            for (int i = 0; i < rgba.Length; i += 4)
+            {
+                replacer.Invoke(ref rgba[i], ref rgba[i + 1], ref rgba[i + 2], ref rgba[i + 3]);
+            }
+
+            Marshal.Copy(rgba, 0, bmpData.Scan0, rgba.Length);
+
+            maskImg.UnlockBits(bmpData);
+
+            return maskImg;
+        }
+
         private readonly string m_IconsDir;
         private readonly bool m_DisposeIcons;
 
@@ -73,12 +114,7 @@ namespace CodeStack.SwEx.Common.Icons
             }
         }
 
-        /// <summary>
-        /// Converts the group of icons and stacks them horizontally
-        /// </summary>
-        /// <param name="icons">List of icons to convert</param>
-        /// <param name="highRes">True to generate high resolution icons</param>
-        /// <returns>Full paths to generated icon images</returns>
+        /// <inheritdoc/>
         public string[] ConvertIconsGroup(IIcon[] icons, bool highRes)
         {
             if (icons == null || !icons.Any())
@@ -128,12 +164,7 @@ namespace CodeStack.SwEx.Common.Icons
             return iconsPaths;
         }
 
-        /// <summary>
-        /// Converts icon into the required size and quality and saves it on disk
-        /// </summary>
-        /// <param name="icon">Icon to convert</param>
-        /// <param name="highRes">True to generate high resolution icon</param>
-        /// <returns>Path to generated icons</returns>
+        /// <inheritdoc/>
         public string[] ConvertIcon(IIcon icon, bool highRes)
         {
             var iconsData = CreateIconData(icon, highRes);

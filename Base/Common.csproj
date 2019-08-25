@@ -60,6 +60,7 @@
     <Compile Include="Attributes\LoggerOptionsAttribute.cs" />
     <Compile Include="Attributes\ModuleInfoAttribute.cs" />
     <Compile Include="Attributes\TitleAttribute.cs" />
+    <Compile Include="Base\IIconsConverter.cs" />
     <Compile Include="Base\IModule.cs" />
     <Compile Include="Diagnostics\ILogger.cs" />
     <Compile Include="Diagnostics\LoggerBase.cs" />

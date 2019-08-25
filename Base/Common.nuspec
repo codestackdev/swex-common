@@ -2,11 +2,11 @@
 <package >
   <metadata>
     <id>CodeStack.SwEx.Common</id>
-    <version>0.9.6</version>
+    <version>0.9.7</version>
     <title>SwEx.Common</title>
     <authors>CodeStack</authors>
     <owners>CodeStack</owners>
-    <licenseUrl>https://github.com/codestack-net-dev/swex-common/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/codestackdev/swex-common/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://www.codestack.net/labs/solidworks/swex/</projectUrl>
     <iconUrl>https://www.codestack.net/labs/solidworks/swex/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
