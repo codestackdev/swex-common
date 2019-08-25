@@ -229,7 +229,14 @@ namespace CodeStack.SwEx.Common.Icons
 
                     for (int i = 0; i < sourceIcons.Length; i++)
                     {
-                        var sourceIcon = sourceIcons[i];
+                        var sourceIcon = ReplaceColor(sourceIcons[i],
+                            new ColorReplacerDelegate((ref byte r, ref byte g, ref byte b, ref byte a) => 
+                            {
+                                if (r == background.R && g == background.G && b == background.B && a == background.A)
+                                {
+                                    b = (byte)((b == 0) ? 1 : (b - 1));
+                                }
+                            }));
 
                         if (bmp.HorizontalResolution != sourceIcon.HorizontalResolution
                             || bmp.VerticalResolution != sourceIcon.VerticalResolution)
@@ -278,6 +285,9 @@ namespace CodeStack.SwEx.Common.Icons
             }
         }
 
+        /// <summary>
+        /// Disposing temp icon files
+        /// </summary>
         public void Dispose()
         {
             if (m_DisposeIcons)
