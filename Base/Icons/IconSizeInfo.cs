@@ -46,6 +46,12 @@ namespace CodeStack.SwEx.Common.Icons
         /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Icon size constructor with source image, target size and optional base name
+        /// </summary>
+        /// <param name="srcImage">Source image</param>
+        /// <param name="targetSize">Target size of the image</param>
+        /// <param name="baseName">Base name of the image</param>
         public IconSizeInfo(Image srcImage, Size targetSize, string baseName = "")
         {
             SourceImage = srcImage;

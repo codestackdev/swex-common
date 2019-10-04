@@ -62,6 +62,7 @@
     <Compile Include="Attributes\IconAttribute.cs" />
     <Compile Include="Attributes\LoggerOptionsAttribute.cs" />
     <Compile Include="Attributes\ModuleInfoAttribute.cs" />
+    <Compile Include="Attributes\SummaryAttribute.cs" />
     <Compile Include="Attributes\TitleAttribute.cs" />
     <Compile Include="Base\IIconsConverter.cs" />
     <Compile Include="Base\IModule.cs" />
@@ -70,7 +71,9 @@
     <Compile Include="Diagnostics\LoggerFactory.cs" />
     <Compile Include="Diagnostics\LoggerType.cs" />
     <Compile Include="Diagnostics\TraceLogger.cs" />
+    <Compile Include="Enums\SwVersion_e.cs" />
     <Compile Include="Exceptions\IconTransparencyMismatchException.cs" />
+    <Compile Include="Extensions\SldWorksCommonEx.cs" />
     <Compile Include="Icons\IconsConverter.cs" />
     <Compile Include="Icons\IconSizeInfo.cs" />
     <Compile Include="Icons\IIcon.cs" />
